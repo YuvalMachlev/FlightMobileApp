@@ -33,4 +33,8 @@ class UrlViewModel(application: Application) : AndroidViewModel(application) {
     fun updateList(url: Url) = viewModelScope.launch(Dispatchers.IO) {
         repository.insert(url)
     }
+
+    fun deleteAll() = viewModelScope.launch(Dispatchers.IO) {
+        repository.deleteAll()
+    }
 }

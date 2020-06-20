@@ -9,11 +9,10 @@ import androidx.room.Query
 @Dao
 interface UrlDao {
 
-    @Query("SELECT * from url_table ORDER BY url ASC LIMIT 5")
+    @Query("SELECT * from url_table ORDER BY number DESC LIMIT 5")
     fun getAlphabetizedUrl(): LiveData<List<Url>>
 
-
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(url: Url)
 
     @Query("DELETE FROM url_table")
