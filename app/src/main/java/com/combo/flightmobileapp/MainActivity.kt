@@ -1,7 +1,9 @@
 package com.combo.flightmobileapp
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
@@ -35,31 +37,56 @@ class MainActivity : AppCompatActivity() {
         })
 //        urlViewModel.deleteAll()
 
+
+
         val fab = findViewById<FloatingActionButton>(R.id.fab)
         fab.setOnClickListener {
             val urlTextEdit = findViewById<EditText>(R.id.typeURLbox).text.toString()
             val url = Url(urlTextEdit)
             urlViewModel.insert(url)
 
+            // TODO- connect
+            goToSimActivity(urlTextEdit)
 
-//            val intent = Intent(this@MainActivity, NewWordActivity::class.java)
-//            startActivityForResult(intent, newWordActivityRequestCode)
+
+
 
         }
 
+//        val urlButton = findViewById<TextView>(R.id.textView)
+//        urlButton.setOnClickListener {
+//            val urlTextBoxEdit = findViewById<EditText>(R.id.typeURLbox)
+////            urlButton.text = urlTextBoxEdit.text.toString()
+//            val urlButton = findViewById<TextView>(R.id.textView)
+//            urlTextBoxEdit.text = urlButton.editableText
+//        }
 
-        val button = findViewById<Button>(R.id.connectButton)
-        //val urlTextEdit = findViewById<EditText>(R.id.typeURLbox)
-        // set on-click listener
-        button.setOnClickListener {
-            wasClicked(it)
-        }
+
+//        val button = findViewById<Button>(R.id.connectButton)
+//        //val urlTextEdit = findViewById<EditText>(R.id.typeURLbox)
+//        // set on-click listener
+//        button.setOnClickListener {
+//            wasClicked(it)
+//        }
 
     }
-    private fun wasClicked(view: View) {
-        val dubugText = findViewById<TextView>(R.id.debugCons)
+
+    fun goToSimActivity(url: String) {
+        val intent = Intent(this, SimulatorActivity::class.java)
+        intent.putExtra("url", url)
+        startActivity(intent)
+    }
+
+    fun urlWasClicked(view: View) {
+//        val str = (view as TextView).editableText
+//        val urlTextEdit = findViewById<EditText>(R.id.typeURLbox)
+//        urlTextEdit.text = str
+        val str = (view as TextView).text.toString()
         val urlTextEdit = findViewById<EditText>(R.id.typeURLbox)
-        dubugText.text = urlTextEdit.text.toString()
+        urlTextEdit.text = Editable.Factory.getInstance().newEditable(str)
+
+        println("good job")
+
     }
 
 

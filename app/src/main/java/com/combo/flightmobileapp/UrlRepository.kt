@@ -29,7 +29,7 @@ class UrlRepository(private val urlDao: UrlDao) {
             if(!allUrls.value!!.isEmpty()) {
                 val highestNum = allUrls.value!!.first().number
                 url.number = highestNum + 1
-                println(highestNum)
+                println(highestNum+1)
             }
         }
 //        val highestNum = allUrls.value?.first()?.number
