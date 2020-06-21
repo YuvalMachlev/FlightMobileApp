@@ -19,6 +19,7 @@ import java.net.URL
 class MainActivity : AppCompatActivity() {
 
     private lateinit var urlViewModel: UrlViewModel
+    private var client = Client()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

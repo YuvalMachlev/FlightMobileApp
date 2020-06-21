@@ -44,15 +44,15 @@ class JoystickView @JvmOverloads constructor(context: Context, attrs: AttributeS
         canvas.drawCircle(smallCenter.x, smallCenter.y, smallRadius, paint2)
     }
 
-//    override fun onTouchEvent(event: MotionEvent?): Boolean {
-//        when (event?.action) {
-////            MotionEvent.ACTION_DOWN->touchDown(event.x, event.y)
-//            MotionEvent.ACTION_MOVE->touchMove(event.x, event.y)
-//            MotionEvent.ACTION_UP->touchUp(event.x, event.y)
-//
-//        }
-//        return true
-//    }
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        when (event?.action) {
+//            MotionEvent.ACTION_DOWN->touchDown(event.x, event.y)
+            MotionEvent.ACTION_MOVE->touchMove(event.x, event.y)
+            MotionEvent.ACTION_UP->touchUp(event.x, event.y)
+
+        }
+        return true
+    }
     private fun touchMove(x: Float, y: Float) {
         // bool?
         val distanceX = abs(x-bigCenter.x)

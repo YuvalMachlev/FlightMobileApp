@@ -13,16 +13,22 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="355dp" />
 
-    <com.combo.flightmobileapp.JoystickView
-        android:id="@+id/joyStick"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="360dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+    <io.github.controlwear.virtual.joystick.android.JoystickView
+        android:id="@+id/joystickView"
+        android:layout_width="262dp"
+        android:layout_height="242dp"
+        android:layout_marginStart="88dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="28dp"
+        app:JV_backgroundColor="#009688"
+        app:JV_borderColor="#00796B"
+        app:JV_borderWidth="4dp"
+        app:JV_buttonColor="#FF6E40"
+        app:JV_buttonSizeRatio="15%"
+        app:JV_fixedCenter="false"
+        app:layout_constraintBottom_toTopOf="@+id/rudder"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/guideline"
+        app:layout_constraintTop_toTopOf="@+id/guideline"
         app:layout_constraintVertical_bias="1.0" />
 
     <SeekBar
@@ -32,6 +38,7 @@
         android:layout_marginStart="76dp"
         android:layout_marginBottom="16dp"
         android:background="@color/colorPrimary"
+        android:max="200"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -39,12 +46,26 @@
         android:id="@+id/throttle"
         android:layout_width="218dp"
         android:layout_height="41dp"
-        android:layout_marginEnd="256dp"
-        android:layout_marginBottom="168dp"
+        android:layout_marginEnd="180dp"
+        android:layout_marginBottom="148dp"
         android:background="@color/colorPrimary"
-        android:rotation="90"
+        android:progress="0"
+        android:rotation="270"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/joyStick" />
+        app:layout_constraintEnd_toEndOf="@+id/joystickView" />
+
+    <ImageView
+        android:id="@+id/simImg"
+        android:layout_width="336dp"
+        android:layout_height="293dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@android:drawable/divider_horizontal_bright" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
