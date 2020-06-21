@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#E7E7E8"
     tools:context=".SimulatorActivity">
 
     <androidx.constraintlayout.widget.Guideline
@@ -20,10 +21,10 @@
         android:layout_marginStart="88dp"
         android:layout_marginTop="32dp"
         android:layout_marginBottom="28dp"
-        app:JV_backgroundColor="#009688"
-        app:JV_borderColor="#00796B"
+        app:JV_backgroundColor="#888a8a"
+        app:JV_borderColor="#000000"
         app:JV_borderWidth="4dp"
-        app:JV_buttonColor="#FF6E40"
+        app:JV_buttonColor="#e7e6eb"
         app:JV_buttonSizeRatio="15%"
         app:JV_fixedCenter="false"
         app:layout_constraintBottom_toTopOf="@+id/rudder"
@@ -56,8 +57,8 @@
 
     <ImageView
         android:id="@+id/simImg"
-        android:layout_width="336dp"
-        android:layout_height="293dp"
+        android:layout_width="381dp"
+        android:layout_height="290dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="4dp"
         android:layout_marginBottom="32dp"
@@ -65,7 +66,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@android:drawable/divider_horizontal_bright" />
+        app:srcCompat="@android:drawable/divider_horizontal_bright"
+        android:contentDescription="@string/app_name" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,6 +2,7 @@ package com.combo.flightmobileapp
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.ImageView
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import androidx.appcompat.app.AppCompatActivity
@@ -25,18 +26,18 @@ class SimulatorActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val url = intent.getStringExtra("url")
         if (url != null) {
-            //  val c = client.connect(url)
-            // if (c == 1) {
-            setContentView(R.layout.activity_simulator)
-            initRudder()
-            initThrottle()
-            initJoystick()
-            onStart()
-            //  } else {
-            /*     val intent = Intent(this, MainActivity::class.java)
-                 intent.putExtra("url", url)
-                 startActivity(intent)*/
-            // }
+            val c = client.connect(url)
+            if (c == 1) {
+                setContentView(R.layout.activity_simulator)
+                initRudder()
+                initThrottle()
+                initJoystick()
+                onStart()
+            } else {
+                /*     val intent = Intent(this, MainActivity::class.java)
+                     intent.putExtra("url", url)
+                     startActivity(intent)*/
+            }
         }
 
 
@@ -54,13 +55,13 @@ class SimulatorActivity : AppCompatActivity() {
                 lastElevator = elevatorValue
                 client.aileronValue = aileronValue
                 client.elevatorValue = elevatorValue
-                CoroutineScope(IO).launch { client.sendData() }
+                CoroutineScope(IO).launch { client.sendData(applicationContext) }
                 //client.sendData()
-                println("aileron:")
+             /*   println("aileron:")
                 println(aileronValue)
                 println("------------")
                 println("elevator:")
-                println(elevatorValue)
+                println(elevatorValue)*/
             }
         }
 
@@ -75,9 +76,9 @@ class SimulatorActivity : AppCompatActivity() {
                 val barValue = (i / 100f)
                 // update server
                 client.throttleValue = barValue
-                CoroutineScope(IO).launch { client.sendData() }
+                CoroutineScope(IO).launch { client.sendData(applicationContext) }
                 //client.sendData();
-                println(barValue)
+                //println(barValue)
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar) {
@@ -99,9 +100,9 @@ class SimulatorActivity : AppCompatActivity() {
                 val barValue = ((i - 100) / 100f)
                 // update server
                 client.rudderValue = barValue
-                //CoroutineScope(IO).launch { client.sendData() }
+                CoroutineScope(IO).launch { client.sendData(applicationContext) }
                 //client.sendData()
-                println(barValue)
+                //println(barValue)
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar) {
@@ -118,7 +119,7 @@ class SimulatorActivity : AppCompatActivity() {
         super.onStart()
         //todo check if condition needed
         running = true
-        //getImage()
+        getImage()
     }
 
     override fun onPause() {
@@ -138,9 +139,10 @@ class SimulatorActivity : AppCompatActivity() {
 
     private fun getImage() {
         //running = true
+        val img = findViewById<ImageView>(R.id.simImg)
         CoroutineScope(IO).launch {
             while (running) {
-                client.changeImage(running)
+                client.changeImage(running, img, applicationContext)
                 delay(300)
             }
 

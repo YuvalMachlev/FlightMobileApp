@@ -1,10 +1,16 @@
 package com.combo.flightmobileapp
 
+import android.content.Context
+import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.provider.ContactsContract
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.gson.GsonBuilder
+import kotlinx.android.synthetic.main.activity_simulator.*
+import kotlinx.coroutines.delay
 import java.net.HttpURLConnection
 import java.net.URL
 import okhttp3.MediaType
@@ -24,6 +30,8 @@ class Client : AppCompatActivity() {
     var elevatorValue = 0.0
     var throttleValue = 0f
     var rudderValue = 0f
+    var gotImage = false
+    //lateinit var bitmap: Bitmap
 
     fun connect(url: String): Int {
         val temp: URL
@@ -40,9 +48,10 @@ class Client : AppCompatActivity() {
         return 1
     }
 
-    fun sendData() {
+    fun sendData(context: Context) {
         val json: String =
-            "{\"aileron\": $aileronValue,\n \"rudder\": $rudderValue,\n \"elevator\": $elevatorValue,\n \"throttle\": $throttleValue\n}"
+            "{\n\"aileron\": $aileronValue,\n \"rudder\": $rudderValue,\n \"elevator\": $elevatorValue,\n \"throttle\": $throttleValue\n}"
+        //println(json)
         val rb: RequestBody = RequestBody.create(MediaType.parse("application/json"), json)
         val gson = GsonBuilder()
             .setLenient()
@@ -54,29 +63,25 @@ class Client : AppCompatActivity() {
         val api = retrofit.create(Api::class.java)
         val body = api.postData(rb).enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                println("Failure sent !")
-                /*if (!changeImage) {
-                    return
-                }*/
-                /*Toast.makeText(applicationContext, t.message,
-                    Toast.LENGTH_SHORT).show()*/
+                Toast.makeText(
+                    context, t.message,
+                    Toast.LENGTH_SHORT
+                ).show()
                 return
             }
 
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                println("response")
-                /* if (!changeImage) {
-                     return
-                 }
-                 if (response.code() != 200) {
-                     val message = getResponseMessage(response)
-                     showMessage(message)
-                 }*/
+                if (response.code() != 200) {
+                    Toast.makeText(
+                        context, response.message(),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
         })
     }
 
-    fun changeImage(running: Boolean) {
+    fun changeImage(running: Boolean, img: ImageView, context: Context) {
         val gson = GsonBuilder().setLenient().create()
         val retrofit = Retrofit.Builder().baseUrl(this.urlConn.toString())
             .addConverterFactory(GsonConverterFactory.create(gson)).build()
@@ -85,7 +90,7 @@ class Client : AppCompatActivity() {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 if (running) {
                     Toast.makeText(
-                        applicationContext, t.message,
+                        context, t.message,
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -98,16 +103,43 @@ class Client : AppCompatActivity() {
                 }
                 val iStream = response.body()?.byteStream()
                 if (iStream == null) {
-                    /* val message = getResponseMessage(response)
-                     showMessage(message)*/
-                    println("IMAGE ERROR - istream is null")
+                    Toast.makeText(
+                        context, "Input stream is empty",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    return
                 }
                 val bitmap = BitmapFactory.decodeStream(iStream)
                 runOnUiThread {
-                    val imageView = findViewById<ImageView>(R.id.simImg)
-                    imageView.setImageBitmap(bitmap)
+                    img.setImageBitmap(bitmap)
                 }
             }
         })
+    }
+
+    fun getOneImage(): Int {
+        val gson = GsonBuilder().setLenient().create()
+        val retrofit = Retrofit.Builder().baseUrl(this.urlConn.toString())
+            .addConverterFactory(GsonConverterFactory.create(gson)).build()
+        val api = retrofit.create(Api::class.java)
+        api.getImage().enqueue(object : Callback<ResponseBody> {
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                gotImage = false
+                println("falsseeeeeeeeeee")
+            }
+
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                gotImage = true
+                println("the value of gotImage is: TRUE")
+                /*val intent = Intent(context, SimulatorActivity::class.java)
+                intent.putExtra("url", urlConn)
+                startActivity(intent)*/
+            }
+
+        })
+        if (gotImage) {
+            return 1
+        }
+        return 0
     }
 }
