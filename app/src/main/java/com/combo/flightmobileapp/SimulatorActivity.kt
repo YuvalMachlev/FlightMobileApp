@@ -56,7 +56,9 @@ class SimulatorActivity : AppCompatActivity() {
             val elevatorValue = kotlin.math.sin(Math.toRadians(angle.toDouble())) * strength / 100
 
             //if the difference is more than 1%
-            if (abs(aileronValue - lastAileron) >= 0.02 || abs(elevatorValue - lastElevator) >= 0.02) {
+            if (abs(aileronValue - lastAileron) >= 0.02
+                || abs(elevatorValue - lastElevator) >= 0.02
+            ) {
                 lastAileron = aileronValue
                 lastElevator = elevatorValue
                 client.aileronValue = aileronValue
