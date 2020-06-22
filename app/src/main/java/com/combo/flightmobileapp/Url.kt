@@ -7,11 +7,8 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "url_table")
 data class Url(
-//    @PrimaryKey(autoGenerate = true) val id: Int,
-//    @ColumnInfo(name = "url") val url: String
-
-    @PrimaryKey val url: String,
-    @ColumnInfo var number: Int = 0
+    @PrimaryKey val url: String, //url address as string
+    @ColumnInfo var number: Int = 0 //timestamp of record
 )
 
 

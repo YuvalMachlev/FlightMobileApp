@@ -14,6 +14,7 @@ class UrlListAdapter internal constructor(
     private val inflater: LayoutInflater = LayoutInflater.from(context)
     private var urls = emptyList<Url>() // Cached copy of urls
 
+    //view holder - holds the url in UI by textView
     inner class UrlViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val urlItemView: TextView = itemView.findViewById(R.id.textView)
     }

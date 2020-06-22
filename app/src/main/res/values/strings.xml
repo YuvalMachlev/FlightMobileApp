@@ -2,5 +2,10 @@
     <string name="app_name">FlightMobileApp</string>
     <string name="type_url">Type URL...</string>
     <string name="add_url">Add URL...</string>
+    <string name="elevator">---Elevator---</string>
+    <string name="aileron">---Aileron---</string>
+    <string name="rudder">Rudder</string>
+    <string name="throttle">Throttle</string>
+    <string name="connect">Connect</string>
 
 </resources>

@@ -54,6 +54,10 @@ class MainActivity : AppCompatActivity() {
                 if (c == 1) {
                     var c2 = client.getOneImage()
                     //println(client.gotImage.toString())
+                    Toast.makeText(
+                        applicationContext, "Trying to connect, please wait.",
+                        Toast.LENGTH_SHORT
+                    ).show()
 
                     GlobalScope.launch(Dispatchers.Main) {
                         delay(500)
@@ -63,9 +67,21 @@ class MainActivity : AppCompatActivity() {
                             goToSimActivity(urlTextEdit)
                         } else {
                             Toast.makeText(
-                                applicationContext, "Connection problem (no Image received)",
+                                applicationContext, "Failed. Reconnecting...",
                                 Toast.LENGTH_SHORT
                             ).show()
+                            delay(1000)
+
+                            if (c2 == 1 || client.gotImage) {
+                                client.gotImage = false
+                                c2 = 0
+                                goToSimActivity(urlTextEdit)
+                            } else {
+                                Toast.makeText(
+                                    applicationContext, "Connection failed, please try again!",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
                         }
                     }
 
